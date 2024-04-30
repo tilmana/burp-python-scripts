@@ -13,7 +13,7 @@ if script.is_in_scope() and (callbacks.getToolName(toolFlag) == "Repeater"): # c
         headers = req.getHeaders()
         forbidden = False
         i = 0
-        forbiddenPaths = ["/ip"] # paths to not alter requests for
+        forbiddenPaths = ["/"] # paths to not alter requests for
         if headers[i].split(" ")[1].split("?")[0] in forbiddenPaths:
             forbidden = True
         if forbidden != True: # change logic here for handling non-forbidden requests

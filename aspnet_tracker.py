@@ -13,20 +13,23 @@ if script.is_in_scope() and (callbacks.getToolName(toolFlag) == "Extensions"):
     headers = req.getHeaders()
     #print(str(script.get_header_value("Cookie", headers)).replace(" ", "").split(";"))
     #print(headers)
-    if "authZ=True" in script.get_header_value("Cookie", headers):
-       for header_name in header_names:
-          for header in headers:
-            if header.startswith(header_name):
-              headers.remove(header)
-              print("[+] Removed header: " + header_name)
-              break
+    try:
+       if "authZ=True" in script.get_header_value("Cookie", headers):
+        for header_name in header_names:
+            for header in headers:
+                if header.startswith(header_name):
+                    headers.remove(header)
+                    print("[+] Removed header: " + header_name)
+                    break
+    except Exception as e:
+      pass
     if 'viewstate' in state and 'viewstategenerator' in state and 'eventvalidation' in state:
       viewstate = r'(__VIEWSTATE=)[^&]+'
       viewstategenerator = r'(__VIEWSTATEGENERATOR=)[^&]+'
       eventvalidation = r'(__EVENTVALIDATION=)[^&]+'
-      body = re.sub(viewstate, r'\l' + state['viewstate'], body)
-      body = re.sub(viewstategenerator, r'\l' + state['viewstategenerator'], body)
-      body = re.sub(eventvalidation, r'\l' + state['eventvalidation'], body)
+      body = re.sub(viewstate, r'\1' + state['viewstate'], body)
+      body = re.sub(viewstategenerator, r'\1' + state['viewstategenerator'], body)
+      body = re.sub(eventvalidation, r'\1' + state['eventvalidation'], body)
     newreq = helpers.buildHttpMessage(headers, body)
     messageInfo.setRequest(newreq)
   else:

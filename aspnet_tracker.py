@@ -2,12 +2,12 @@ from pyscripterer import BaseScript as Script
 import re
 
 args = [extender, callbacks, helpers, toolFlag, messageIsRequest, messageInfo, macroItems]
-header_names = ["Cookie", "Authorization]
+header_names = ["Cookie", "Authorization"]
 script = Script(*args)
 
 if script.is_in_scope() and (callbacks.getToolName(toolFlag) == "Extensions"):
 	if (messageIsRequest):
-	    headers = req.getHeaders()
+		headers = req.getHeaders()
 		if "authZ=True" in script.get_header_value("Cookie", headers):
 			for header in header_names:
 				headers.remove(header)

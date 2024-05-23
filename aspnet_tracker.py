@@ -1,6 +1,6 @@
 from pyscripterer import BaseScript as Script
 import re
-import urllib.parse
+import urllib
 
 args = [extender, callbacks, helpers, toolFlag, messageIsRequest, messageInfo, macroItems]
 header_names = ["Cookie", "Authorization"]
@@ -28,9 +28,9 @@ if script.is_in_scope() and (callbacks.getToolName(toolFlag) == "Extensions"):
       viewstate = r'(__VIEWSTATE=)[^&]+'
       viewstategenerator = r'(__VIEWSTATEGENERATOR=)[^&]+'
       eventvalidation = r'(__EVENTVALIDATION=)[^&]+'
-      body = re.sub(viewstate, urllib.parse.quote("__VIEWSTATE=" + state['viewstate']), body)
-      body = re.sub(viewstategenerator, urllib.parse.quote("__VIEWSTATEGENERATOR=" + state['viewstategenerator']), body)
-      body = re.sub(eventvalidation, urllib.parse.quote("__EVENTVALIDATION=" + state['eventvalidation']), body)
+      body = re.sub(viewstate, urllib.quote("__VIEWSTATE=" + state['viewstate']), body)
+      body = re.sub(viewstategenerator, urllib.quote("__VIEWSTATEGENERATOR=" + state['viewstategenerator']), body)
+      body = re.sub(eventvalidation, urllib.quote("__EVENTVALIDATION=" + state['eventvalidation']), body)
     newreq = helpers.buildHttpMessage(headers, body)
     messageInfo.setRequest(newreq)
   else:

@@ -27,9 +27,9 @@ if script.is_in_scope() and (callbacks.getToolName(toolFlag) == "Extensions"):
       viewstate = r'(__VIEWSTATE=)[^&]+'
       viewstategenerator = r'(__VIEWSTATEGENERATOR=)[^&]+'
       eventvalidation = r'(__EVENTVALIDATION=)[^&]+'
-      body = re.sub(viewstate, r'\1' + state['viewstate'], body)
-      body = re.sub(viewstategenerator, r'\1' + state['viewstategenerator'], body)
-      body = re.sub(eventvalidation, r'\1' + state['eventvalidation'], body)
+      body = re.sub(viewstate, "__VIEWSTATE=" + state['viewstate'], body)
+      body = re.sub(viewstategenerator, "__VIEWSTATEGENERATOR=" + state['viewstategenerator'], body)
+      body = re.sub(eventvalidation, "__EVENTVALIDATION=" + state['eventvalidation'], body)
     newreq = helpers.buildHttpMessage(headers, body)
     messageInfo.setRequest(newreq)
   else:

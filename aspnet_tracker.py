@@ -24,12 +24,14 @@ if script.is_in_scope() and (callbacks.getToolName(toolFlag) == "Extensions"):
                     break
     except Exception as e:
       pass
-    if 'viewstate' in state and 'viewstategenerator' in state and 'eventvalidation' in state:
+    if 'viewstate' in state:
       viewstate = r'(__VIEWSTATE=)[^&]+'
-      viewstategenerator = r'(__VIEWSTATEGENERATOR=)[^&]+'
-      eventvalidation = r'(__EVENTVALIDATION=)[^&]+'
       body = re.sub(viewstate, "__VIEWSTATE=" + urllib.quote(state['viewstate']), body)
+    if 'viewstategenerator' in state:
+      viewstategenerator = r'(__VIEWSTATEGENERATOR=)[^&]+'
       body = re.sub(viewstategenerator, "__VIEWSTATEGENERATOR=" + urllib.quote(state['viewstategenerator']), body)
+    if 'eventvalidation' in state:
+      eventvalidation = r'(__EVENTVALIDATION=)[^&]+'
       body = re.sub(eventvalidation, "__EVENTVALIDATION=" + urllib.quote(state['eventvalidation']), body)
     newreq = helpers.buildHttpMessage(headers, body)
     messageInfo.setRequest(newreq)

@@ -10,7 +10,7 @@ if (not messageIsRequest):
         headers = responseInfo.getHeaders()
         msgBody = messageInfo.getResponse()[responseInfo.getBodyOffset():]
         response = helpers.bytesToString(msgBody)
-        response = re.sub('original', 'modified', response) # regex for modification of response
+        response = re.sub('original', 'modified', response) # regex for modification of response, can also do replacement via "response = 'newresponse'"
         #print(response) # debug
         msgBody = helpers.stringToBytes(response)
         message = helpers.buildHttpMessage(headers, msgBody)
